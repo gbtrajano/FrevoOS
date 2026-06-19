@@ -8,6 +8,7 @@ import { formatCurrency, formatDate } from "@/lib/utils";
 import { STATUS_OS_LABELS, type StatusOS } from "@/lib/types";
 
 const LOGO_KEY = "otica_logo_b64";
+const DEFAULT_LOGO = "/logo.png";
 
 interface OsItem {
   id: number;
@@ -42,7 +43,7 @@ export default function ImprimirOsPage({
 
   useEffect(() => {
     const stored = localStorage.getItem(LOGO_KEY);
-    if (stored) setLogoSrc(stored);
+    setLogoSrc(stored ?? DEFAULT_LOGO);
   }, []);
 
   useEffect(() => {
@@ -117,16 +118,11 @@ export default function ImprimirOsPage({
         {/* Cabeçalho */}
         <div className="mb-8 flex items-start justify-between gap-6 border-b border-gray-200 pb-6">
           <div className="flex-1">
-            {logoSrc ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={logoSrc}
-                alt="Logo da ótica"
-                className="mb-3 h-16 max-w-[200px] object-contain"
-              />
-            ) : (
-              <div className="mb-3 text-lg font-bold text-gray-400">[Logo da Ótica]</div>
-            )}
+            <img
+              src={logoSrc ?? DEFAULT_LOGO}
+              alt="Logo da ótica"
+              className="mb-3 h-16 max-w-[200px] object-contain"
+            />
           </div>
           <div className="text-right">
             <p className="text-xs uppercase tracking-widest text-gray-400">Ordem de Serviço</p>

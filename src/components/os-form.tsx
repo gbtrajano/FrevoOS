@@ -18,6 +18,8 @@ import {
 } from "@/lib/types";
 
 const LOGO_KEY = "otica_logo_b64";
+// Logo padrão no public/ — é usada quando não há upload manual
+const DEFAULT_LOGO = "/logo.png";
 
 export function OsForm({ osId }: { osId?: number }) {
   const supabase = getSupabaseBrowserClient();
@@ -38,10 +40,10 @@ export function OsForm({ osId }: { osId?: number }) {
   const [logoSrc, setLogoSrc] = useState<string | null>(null);
   const [savedOsId, setSavedOsId] = useState<number | undefined>(osId);
 
-  // Load logo from localStorage
+  // Carrega logo: prioridade localStorage (upload manual) → /logo.png (padrão)
   useEffect(() => {
     const stored = localStorage.getItem(LOGO_KEY);
-    if (stored) setLogoSrc(stored);
+    setLogoSrc(stored ?? DEFAULT_LOGO);
   }, []);
 
   useEffect(() => {
@@ -86,7 +88,7 @@ export function OsForm({ osId }: { osId?: number }) {
   }
 
   function removeLogo() {
-    setLogoSrc(null);
+    setLogoSrc(DEFAULT_LOGO);
     localStorage.removeItem(LOGO_KEY);
     if (logoInputRef.current) logoInputRef.current.value = "";
   }

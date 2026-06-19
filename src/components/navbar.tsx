@@ -49,7 +49,7 @@ export function Navbar() {
         <Link href="/painel" className="flex items-center gap-2.5 shrink-0">
           <LensMark className="h-6 w-10 text-white" />
           <span className="font-display text-lg font-bold tracking-tight text-white">
-            Ótica<span className="font-normal text-white/70">OS</span>
+            Ótica<span className="font-normal text-white/70">Frevo</span>
           </span>
         </Link>
 

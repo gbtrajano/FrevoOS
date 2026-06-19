@@ -48,7 +48,7 @@ export default function LoginPage() {
         <div className="relative z-10 flex items-center gap-2.5">
           <LensMark className="h-7 w-12" />
           <span className="font-display text-xl font-bold tracking-tight">
-            Ótica<span className="font-normal text-white/70">OS</span>
+            Ótica<span className="font-normal text-white/70">Frevo</span>
           </span>
         </div>
 
@@ -76,7 +76,7 @@ export default function LoginPage() {
           <div className="mb-1 flex items-center gap-2 lg:hidden">
             <LensMark className="h-6 w-10 text-garnet-500" />
             <span className="font-display text-lg font-bold text-ink-900">
-              ÓticaOS
+              ÓticaFrevo
             </span>
           </div>
           <h1 className="mt-4 font-display text-2xl font-bold text-ink-900">
