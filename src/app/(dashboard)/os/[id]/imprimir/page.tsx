@@ -121,8 +121,9 @@ export default function ImprimirOsPage({
             <img
               src={logoSrc ?? DEFAULT_LOGO}
               alt="Logo da ótica"
-              className="mb-3 h-16 max-w-[200px] object-contain"
+              className="mb-2 h-16 max-w-[200px] object-contain"
             />
+            <p className="text-xs text-gray-400">CNPJ: 62.420.793/0001-55</p>
           </div>
           <div className="text-right">
             <p className="text-xs uppercase tracking-widest text-gray-400">Ordem de Serviço</p>
