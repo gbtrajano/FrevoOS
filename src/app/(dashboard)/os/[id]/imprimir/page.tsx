@@ -5,7 +5,16 @@ import { useRouter } from "next/navigation";
 import { Printer, ArrowLeft } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import { STATUS_OS_LABELS, type StatusOS } from "@/lib/types";
+import {
+  STATUS_OS_LABELS,
+  STATUS_PRODUCAO_LABELS,
+  STATUS_PRODUCAO_COLORS,
+  STATUS_PAGAMENTO_LABELS,
+  STATUS_PAGAMENTO_COLORS,
+  type StatusOS,
+  type StatusProducao,
+  type StatusPagamento,
+} from "@/lib/types";
 
 const LOGO_KEY = "otica_logo_b64";
 const DEFAULT_LOGO = "/logo.png";
@@ -21,6 +30,8 @@ interface OsData {
   id: number;
   data: string;
   status: StatusOS;
+  status_producao: StatusProducao;
+  status_pagamento: StatusPagamento;
   observacoes: string | null;
   desconto: number;
   valor_total: number;
@@ -129,12 +140,26 @@ export default function ImprimirOsPage({
             <p className="text-xs uppercase tracking-widest text-gray-400">Ordem de Serviço</p>
             <p className="font-display text-4xl font-bold text-garnet-600">#{os.id.toString().padStart(4, "0")}</p>
             <p className="mt-1 text-sm text-gray-500">Data: <strong>{formatDate(os.data)}</strong></p>
-            <span
-              className="mt-2 inline-block rounded-full px-3 py-1 text-xs font-semibold"
-              style={{ backgroundColor: "#FEE2E8", color: "#B3122B" }}
-            >
-              {STATUS_OS_LABELS[os.status]}
-            </span>
+            <div className="mt-2 flex flex-col items-end gap-1.5">
+              <span
+                className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
+                style={{
+                  backgroundColor: `${STATUS_PRODUCAO_COLORS[os.status_producao ?? "em_producao"]}20`,
+                  color: STATUS_PRODUCAO_COLORS[os.status_producao ?? "em_producao"],
+                }}
+              >
+                Produção: {STATUS_PRODUCAO_LABELS[os.status_producao ?? "em_producao"]}
+              </span>
+              <span
+                className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
+                style={{
+                  backgroundColor: `${STATUS_PAGAMENTO_COLORS[os.status_pagamento ?? "pendente"]}20`,
+                  color: STATUS_PAGAMENTO_COLORS[os.status_pagamento ?? "pendente"],
+                }}
+              >
+                Pagamento: {STATUS_PAGAMENTO_LABELS[os.status_pagamento ?? "pendente"]}
+              </span>
+            </div>
           </div>
         </div>
 

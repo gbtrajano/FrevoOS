@@ -79,6 +79,10 @@ create table if not exists public.ordens_servico (
   data          date not null default current_date,
   status        text not null default 'solicitado'
                 check (status in ('solicitado', 'laboratorio', 'pronto', 'concluido', 'cancelado')),
+  status_producao  text not null default 'em_producao'
+                   check (status_producao in ('em_producao', 'pronto')),
+  status_pagamento text not null default 'pendente'
+                   check (status_pagamento in ('pendente', 'pago')),
   observacoes   text,
   desconto      numeric(10,2) not null default 0,
   valor_total   numeric(10,2) not null default 0,

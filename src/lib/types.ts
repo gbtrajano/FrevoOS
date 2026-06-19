@@ -7,6 +7,9 @@ export type StatusOS =
   | "concluido"
   | "cancelado";
 
+export type StatusProducao = "em_producao" | "pronto";
+export type StatusPagamento = "pendente" | "pago";
+
 export interface Cliente {
   id: number;
   nome: string;
@@ -65,6 +68,8 @@ export interface OrdemServico {
   orcamento_id: number | null;
   data: string;
   status: StatusOS;
+  status_producao: StatusProducao;
+  status_pagamento: StatusPagamento;
   observacoes: string | null;
   desconto: number;
   valor_total: number;
@@ -109,4 +114,24 @@ export const STATUS_OS_COLORS: Record<StatusOS, string> = {
   pronto: "#2F9E6E",
   concluido: "#2451B3",
   cancelado: "#B3122B",
+};
+
+export const STATUS_PRODUCAO_LABELS: Record<StatusProducao, string> = {
+  em_producao: "Em produção",
+  pronto: "Pronto",
+};
+
+export const STATUS_PRODUCAO_COLORS: Record<StatusProducao, string> = {
+  em_producao: "#D9A441",
+  pronto: "#2F9E6E",
+};
+
+export const STATUS_PAGAMENTO_LABELS: Record<StatusPagamento, string> = {
+  pendente: "Pendente",
+  pago: "Pago",
+};
+
+export const STATUS_PAGAMENTO_COLORS: Record<StatusPagamento, string> = {
+  pendente: "#E05A2B",
+  pago: "#2451B3",
 };

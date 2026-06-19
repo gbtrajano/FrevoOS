@@ -11,10 +11,14 @@ import { ItensEditor } from "@/components/itens-editor";
 import { todayISO } from "@/lib/utils";
 import {
   STATUS_OS_LABELS,
+  STATUS_PRODUCAO_LABELS,
+  STATUS_PAGAMENTO_LABELS,
   type Cliente,
   type ItemPedido,
   type Produto,
   type StatusOS,
+  type StatusProducao,
+  type StatusPagamento,
 } from "@/lib/types";
 
 const LOGO_KEY = "otica_logo_b64";
@@ -32,6 +36,8 @@ export function OsForm({ osId }: { osId?: number }) {
   const [clienteId, setClienteId] = useState("");
   const [data, setData] = useState(todayISO());
   const [status, setStatus] = useState<StatusOS>("solicitado");
+  const [statusProducao, setStatusProducao] = useState<StatusProducao>("em_producao");
+  const [statusPagamento, setStatusPagamento] = useState<StatusPagamento>("pendente");
   const [observacoes, setObservacoes] = useState("");
   const [desconto, setDesconto] = useState<number>(0);
   const [itens, setItens] = useState<ItemPedido[]>([]);
@@ -64,6 +70,8 @@ export function OsForm({ osId }: { osId?: number }) {
           setClienteId(String(osRes.data.cliente_id ?? ""));
           setData(osRes.data.data);
           setStatus(osRes.data.status);
+          setStatusProducao(osRes.data.status_producao ?? "em_producao");
+          setStatusPagamento(osRes.data.status_pagamento ?? "pendente");
           setObservacoes(osRes.data.observacoes ?? "");
           setDesconto(Number(osRes.data.desconto) || 0);
         }
@@ -111,6 +119,8 @@ export function OsForm({ osId }: { osId?: number }) {
       cliente_id: Number(clienteId),
       data,
       status,
+      status_producao: statusProducao,
+      status_pagamento: statusPagamento,
       observacoes: observacoes || null,
       desconto: desconto || 0,
       valor_total: totalComDesconto,
@@ -180,6 +190,8 @@ export function OsForm({ osId }: { osId?: number }) {
       cliente_id: Number(clienteId),
       data,
       status,
+      status_producao: statusProducao,
+      status_pagamento: statusPagamento,
       observacoes: observacoes || null,
       desconto: desconto || 0,
       valor_total: totalComDesconto,
@@ -348,14 +360,27 @@ export function OsForm({ osId }: { osId?: number }) {
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Status">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Status de Produção">
             <select
               className={inputClass}
-              value={status}
-              onChange={(e) => setStatus(e.target.value as StatusOS)}
+              value={statusProducao}
+              onChange={(e) => setStatusProducao(e.target.value as StatusProducao)}
             >
-              {Object.entries(STATUS_OS_LABELS).map(([value, label]) => (
+              {Object.entries(STATUS_PRODUCAO_LABELS).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </Field>
+          <Field label="Status de Pagamento">
+            <select
+              className={inputClass}
+              value={statusPagamento}
+              onChange={(e) => setStatusPagamento(e.target.value as StatusPagamento)}
+            >
+              {Object.entries(STATUS_PAGAMENTO_LABELS).map(([value, label]) => (
                 <option key={value} value={value}>
                   {label}
                 </option>
