@@ -80,6 +80,7 @@ create table if not exists public.ordens_servico (
   status        text not null default 'solicitado'
                 check (status in ('solicitado', 'laboratorio', 'pronto', 'concluido', 'cancelado')),
   observacoes   text,
+  desconto      numeric(10,2) not null default 0,
   valor_total   numeric(10,2) not null default 0,
   created_at    timestamptz not null default now()
 );
@@ -146,11 +147,11 @@ create or replace function public.recalc_os_total()
 returns trigger as $$
 begin
   update public.ordens_servico
-    set valor_total = coalesce((
+    set valor_total = greatest(0, coalesce((
       select sum(quantidade * valor_unitario)
       from public.os_itens
       where os_id = coalesce(new.os_id, old.os_id)
-    ), 0)
+    ), 0) - coalesce(desconto, 0))
     where id = coalesce(new.os_id, old.os_id);
   return null;
 end;

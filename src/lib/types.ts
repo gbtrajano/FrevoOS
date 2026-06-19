@@ -66,6 +66,7 @@ export interface OrdemServico {
   data: string;
   status: StatusOS;
   observacoes: string | null;
+  desconto: number;
   valor_total: number;
   created_at: string;
 }
